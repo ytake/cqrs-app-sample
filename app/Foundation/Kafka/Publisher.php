@@ -5,10 +5,10 @@ namespace App\Foundation\Kafka;
 
 use RdKafka\Producer;
 
-final class Client
+final class Publisher
 {
     public function __construct(
-        private Config $config,
+        private PublisherConfig $config,
     ) {}
 
     /**

@@ -16,7 +16,6 @@
     "laravel/tinker": "^2.5",
     "ext-rdkafka": "^4.0",
     "ext-json": "*",
-    "ext-cassandra": "*",
     "elasticsearch/elasticsearch": "^7.0"
   },
   "require-dev": {

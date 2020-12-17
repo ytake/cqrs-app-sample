@@ -3,24 +3,27 @@ declare(strict_types=1);
 
 namespace App\DataAccess;
 
+use App\Foundation\FactoryInterface;
+use App\Foundation\Kafka\Publisher;
 use App\Foundation\Serializer\JsonSerializer;
-use RdKafka\Producer;
+use Illuminate\Contracts\Foundation\Application;
 
-final class EntryProducerFactory
+final class EntryProducerFactory implements FactoryInterface
 {
-    public function __construct(
-        private Producer $producer,
-        private string $broker,
-        private string $topic,
-    ) {
-    }
-
-    public function make(): EntryProducer
-    {
-        $this->producer->addBrokers($this->broker);
+    /**
+     * @param Application $application
+     * @return EntryProducer
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    public function __invoke(
+        Application $application
+    ): EntryProducer {
+        $kafka = $application['config']['kafka'];
+        $producer = $application->make(Publisher::class)->producer();
+        $producer->addBrokers($kafka['brokers']);
         return new EntryProducer(
-            $this->producer,
-            $this->producer->newTopic($this->topic),
+            $producer,
+            $producer->newTopic($kafka['topics']['entry']['created']),
             new JsonSerializer(),
         );
     }

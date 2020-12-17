@@ -10,7 +10,7 @@ use RdKafka\Producer;
 use function sprintf;
 use function rd_kafka_err2str;
 
-final class Config
+final class PublisherConfig
 {
     public function __construct(
         private string $clientId,

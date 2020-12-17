@@ -7,6 +7,7 @@ return [
         'entry' => [
             'created' => env('KAFKA_ENTRY_TOPIC'),
             'client_id' => 'eigei3phai6teeThuaL3',
+            'group' => 'CQRSSampleConsumer',
         ]
     ]
 ];

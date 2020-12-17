@@ -3,48 +3,50 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Foundation\Kafka\Client;
-use App\Foundation\Kafka\Config;
+use App\Foundation\Kafka\Publisher;
+use App\Foundation\Kafka\PublisherConfig;
 use App\DataAccess\EntryProducer;
 use App\DataAccess\EntryProducerFactory;
+use App\Foundation\Kafka\PublisherConfigFactory;
+use App\Foundation\Kafka\Subscriber;
+use App\Foundation\Kafka\SubscriberConfig;
+use App\Foundation\Kafka\SubscriberConfigFactory;
+use App\Foundation\Kafka\SubscriberFactory;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
-use RdKafka\Conf;
+use function array_keys;
+use function array_merge;
 
 final class KafkaServiceProvider extends ServiceProvider implements DeferrableProvider
 {
+    /** @var array<string, string> */
+    private array $factories = [
+        PublisherConfig::class => PublisherConfigFactory::class,
+        EntryProducer::class => EntryProducerFactory::class,
+        SubscriberConfig::class => SubscriberConfigFactory::class,
+        Subscriber::class => SubscriberFactory::class,
+    ];
+
     public function register(): void
     {
-        $kafka = $this->app['config']['kafka'];
+        foreach ($this->factories as $class => $factory) {
+            $this->app->singleton(
+                $class,
+                fn(Application $app) => (new $factory())->__invoke($app)
+            );
+        }
         $this->app->singleton(
-            Config::class,
-            fn(Application $app) => new Config(
-                $kafka['topics']['entry']['client_id'],
-                new Conf(),
-                $this->app['log'],
-            )
-        );
-        $this->app->bind(
-            Client::class,
-            fn(Application $app) => new Client($app->make(Config::class))
-        );
-        $this->app->singleton(
-            EntryProducer::class,
-            fn(Application $app) => (new EntryProducerFactory(
-                $app->make(Client::class)->producer(),
-                $kafka['brokers'],
-                $kafka['topics']['entry']['created']
-            ))->make()
+            Publisher::class,
+            fn(Application $app) => new Publisher($app->make(PublisherConfig::class))
         );
     }
 
     public function provides(): array
     {
-        return [
-            Config::class,
-            Client::class,
-            EntryProducer::class,
-        ];
+        return array_merge(
+            array_keys($this->factories),
+            [Publisher::class]
+        );
     }
 }
