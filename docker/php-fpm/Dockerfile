@@ -1,0 +1,35 @@
+FROM php:8.0-fpm-alpine3.12
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
+RUN apk upgrade --update \
+    && apk add --no-cache \
+        cyrus-sasl-dev \
+        freetype \
+        freetype-dev \
+        g++ \
+        git \
+        libmcrypt \
+        libmcrypt-dev \
+        libmemcached-dev \
+        libxml2-dev \
+        make \
+        npm \
+        tzdata \
+        zlib-dev \
+        autoconf \
+        curl \
+        librdkafka \
+    && docker-php-ext-configure opcache --enable-opcache \
+    && git clone https://github.com/arnaud-lb/php-rdkafka.git /usr/src/php/ext/rdkafka/ \
+    && docker-php-ext-configure rdkafka \
+    && docker-php-ext-install opcache pdo pdo_mysql rdkafka \
+    # Set time zone to Asia/Tokyo
+    && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer \
+    # Modify FPM parameter
+    && sed -i 's/^\(pm.max_children = \).*/\140/g' /usr/local/etc/php-fpm.d/www.conf \
+    && rm -rf \
+        /var/cache/apk/*
+
+# Copy configuration files
+COPY ./docker/php-fpm/conf/opcache.ini $PHP_INI_DIR/conf.d/
