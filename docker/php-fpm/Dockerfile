@@ -34,6 +34,9 @@ RUN apk upgrade --update \
     && echo "Not Found" > /usr/share/nginx/html/index.html \
     && rm -f /etc/nginx/conf.d/default.conf \
     && sed -i -e "s|listen.allowed_clients = 127.0.0.1|;listen.allowed_clients = 127.0.0.1|" /usr/local/etc/php-fpm.d/www.conf \
+    && sed -i -e "s|;catch_workers_output = yes|catch_workers_output = yes|" /usr/local/etc/php-fpm.d/www.conf \
+    && sed -i -e "s|; process.dumpable = yes|process.dumpable = yes|" /usr/local/etc/php-fpm.d/www.conf \
+    && sed -i -e "s|;rlimit_core = 0|rlimit_core = unlimited|" /usr/local/etc/php-fpm.d/www.conf \
     && apk del \
         curl \
         git \

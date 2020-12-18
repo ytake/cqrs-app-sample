@@ -24,7 +24,7 @@ final class SubscriberFactory implements FactoryInterface
         return new Subscriber(
             $kafka['brokers'],
             $kafka['topics']['entry']['created'],
-            new Consumer(conf: $application->make(SubscriberConfig::class)),
+            new Consumer(conf: $application->make(SubscriberConfig::class)->getKafkaConf()),
             $this->getTopicConf()
         );
     }

@@ -5,7 +5,7 @@ PHPを使って理解しやすいようなサンプルにしています。
 
 ## Required 
 
-PHP(Laravel), Apache Kafka, Apache Cassandra、Elasticsearch
+PHP(Laravel), Apache Kafka(& zookeeper), MySQL、Elasticsearch
 
 ### Apache Kafka
 
@@ -13,19 +13,19 @@ recommended [confluent platform](https://www.confluent.jp/)
 
 ## 要件例
 
-いくつかキーワードを投稿して、そのブキーワードを見れるのはもちろんなんですが、  
+いくつかキーワードを投稿して、そのキーワードを見れるのはもちろんなんですが、  
 ワードクラウドみたいなものを実現したいんですよね！  
 
 キーワードはキーワードそのものと識別可能なユーザー情報、ここでは例としてuserIDだけにしましょう。  
 ワードクラウドライクなものはどう実現したらよいでしょう？  
-Elasticsearchを使えば実現できそうですが、キーワード自体とはまた違う概念になりそうです。  
+キーワードとはまた違う概念になりそう（コール数の概念が加わります）で、Elasticsearchを使えば実現できそうです。
 
 ## 処理の流れ
 
 ### Command + Event Sourcing
 
  - PHP（フォーム） 
- - Apache Cassandra(スナップショット)
+ - MySQL(スナップショット/実際には他のものを利用してください)
  - Apache Kafka
  
 ### 読み込みモデル更新処理
@@ -60,4 +60,3 @@ $ docker-compose up -d
 $ docker-compose exec php composer install --prefer-dist --no-interaction && composer app-setup
 $ docker-compose exec php /var/www/html/artisan migrate
 ```
-

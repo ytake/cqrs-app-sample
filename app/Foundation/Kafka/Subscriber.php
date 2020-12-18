@@ -8,7 +8,7 @@ use RdKafka\Consumer;
 use RdKafka\Message;
 use RdKafka\TopicConf;
 use function call_user_func;
-use const RD_KAFKA_OFFSET_END;
+use const RD_KAFKA_OFFSET_STORED;
 use const RD_KAFKA_RESP_ERR_NO_ERROR;
 use const RD_KAFKA_RESP_ERR__TIMED_OUT;
 
@@ -31,7 +31,7 @@ class Subscriber
      */
     public function handle(
         ConsumerInterface $consumer,
-        int $offset = RD_KAFKA_OFFSET_END
+        int $offset = RD_KAFKA_OFFSET_STORED
     ): void {
         $this->consumer->addBrokers($this->broker);
         $topic = $this->consumer->newTopic($this->topic, $this->topicConf);

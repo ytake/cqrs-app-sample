@@ -6,7 +6,7 @@ namespace App\AppService;
 use SampleDomain\Keyword\Event\KeywordRegistered;
 use Illuminate\Contracts\Events\Dispatcher;
 use SampleDomain\Keyword\Entity\Keyword;
-use SampleDomain\Keyword\Repository\KeywordRepository;
+use SampleDomain\Keyword\Repository\KeywordRepositoryInterface;
 use SampleDomain\User\ValueObject\UserId;
 use Ytake\LaravelAspect\Annotation\LogExceptions;
 use Ytake\LaravelAspect\Annotation\Transactional;
@@ -17,11 +17,11 @@ use Ytake\LaravelAspect\Annotation\Transactional;
 class KeywordRegistration
 {
     /**
-     * @param KeywordRepository $repository
+     * @param KeywordRepositoryInterface $repository
      * @param Dispatcher $dispatcher
      */
     public function __construct(
-        private KeywordRepository $repository,
+        private KeywordRepositoryInterface $repository,
         private Dispatcher $dispatcher
     ) {
     }

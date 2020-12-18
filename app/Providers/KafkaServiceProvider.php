@@ -28,7 +28,7 @@ final class KafkaServiceProvider extends ServiceProvider implements DeferrablePr
         Subscriber::class => SubscriberFactory::class,
     ];
 
-    public function register(): void
+    public function boot(): void
     {
         foreach ($this->factories as $class => $factory) {
             $this->app->singleton(
