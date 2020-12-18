@@ -24,7 +24,6 @@ final class PublisherConfig
     public function getKafkaConf(): Conf
     {
         $this->conf->set('client.id', $this->clientId);
-        $this->conf->set('socket.blocking.max.ms', '1');
         $this->conf->set('queue.buffering.max.ms', '1');
         $this->conf->set('queue.buffering.max.messages', '1000');
         $this->callbackDeliveryReport($this->conf);

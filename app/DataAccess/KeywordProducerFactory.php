@@ -8,20 +8,20 @@ use App\Foundation\Kafka\Publisher;
 use App\Foundation\Serializer\JsonSerializer;
 use Illuminate\Contracts\Foundation\Application;
 
-final class EntryProducerFactory implements FactoryInterface
+final class KeywordProducerFactory implements FactoryInterface
 {
     /**
      * @param Application $application
-     * @return EntryProducer
+     * @return KeywordProducer
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function __invoke(
         Application $application
-    ): EntryProducer {
+    ): KeywordProducer {
         $kafka = $application['config']['kafka'];
         $producer = $application->make(Publisher::class)->producer();
         $producer->addBrokers($kafka['brokers']);
-        return new EntryProducer(
+        return new KeywordProducer(
             $producer,
             $producer->newTopic($kafka['topics']['entry']['created']),
             new JsonSerializer(),

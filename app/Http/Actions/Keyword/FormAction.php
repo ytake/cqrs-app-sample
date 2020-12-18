@@ -1,16 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Actions;
+namespace App\Http\Actions\Keyword;
 
-use App\Http\Responder\HomeResponder;
+use App\Http\Responder\Keyword\FormResponder;
 use Symfony\Component\HttpFoundation\Response;
 
-final class HomeAction
+final class FormAction
 {
     public function __construct(
-        private HomeResponder $responder
-    ) {}
+        private FormResponder $responder
+    ) {
+    }
 
     /**
      * @return Response

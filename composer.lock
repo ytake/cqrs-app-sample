@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c3e1fab12f26886dd3b10d10ebb3f327",
+    "content-hash": "98212d356b5933aba95e48a915a9f8f8",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -154,6 +154,81 @@
                 "source": "https://github.com/dnoegel/php-xdg-base-dir/tree/v0.1.1"
             },
             "time": "2019-12-04T15:06:13+00:00"
+        },
+        {
+            "name": "doctrine/annotations",
+            "version": "1.11.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/annotations.git",
+                "reference": "ce77a7ba1770462cd705a91a151b6c3746f9c6ad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/ce77a7ba1770462cd705a91a151b6c3746f9c6ad",
+                "reference": "ce77a7ba1770462cd705a91a151b6c3746f9c6ad",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/lexer": "1.*",
+                "ext-tokenizer": "*",
+                "php": "^7.1 || ^8.0"
+            },
+            "require-dev": {
+                "doctrine/cache": "1.*",
+                "doctrine/coding-standard": "^6.0 || ^8.1",
+                "phpstan/phpstan": "^0.12.20",
+                "phpunit/phpunit": "^7.5 || ^9.1.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.11.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Common\\Annotations\\": "lib/Doctrine/Common/Annotations"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Docblock Annotations Parser",
+            "homepage": "https://www.doctrine-project.org/projects/annotations.html",
+            "keywords": [
+                "annotations",
+                "docblock",
+                "parser"
+            ],
+            "support": {
+                "issues": "https://github.com/doctrine/annotations/issues",
+                "source": "https://github.com/doctrine/annotations/tree/1.11.1"
+            },
+            "time": "2020-10-26T10:28:16+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -2526,6 +2601,62 @@
                 }
             ],
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "ray/aop",
+            "version": "2.9.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ray-di/Ray.Aop.git",
+                "reference": "7ba283d78b4a457ecefe548c3affc4c0a7e1072b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ray-di/Ray.Aop/zipball/7ba283d78b4a457ecefe548c3affc4c0a7e1072b",
+                "reference": "7ba283d78b4a457ecefe548c3affc4c0a7e1072b",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/annotations": "^1.10",
+                "nikic/php-parser": "^4.2",
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5 || ^9.3"
+            },
+            "suggest": {
+                "ray/di": "A dependency injection framework"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ray\\Aop\\": [
+                        "src/"
+                    ]
+                },
+                "files": [
+                    "annotation_loader.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Akihito Koriyama",
+                    "email": "akihito.koriyama@gmail.com"
+                }
+            ],
+            "description": "An aspect oriented framework",
+            "keywords": [
+                "aop"
+            ],
+            "support": {
+                "issues": "https://github.com/ray-di/Ray.Aop/issues",
+                "source": "https://github.com/ray-di/Ray.Aop/tree/2.9.9"
+            },
+            "time": "2020-09-28T04:33:52+00:00"
         },
         {
             "name": "react/promise",
@@ -5080,6 +5211,90 @@
                 "source": "https://github.com/webmozart/assert/tree/master"
             },
             "time": "2020-07-08T17:02:28+00:00"
+        },
+        {
+            "name": "ytake/laravel-aspect",
+            "version": "7.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ytake/Laravel-Aspect.git",
+                "reference": "ee7f6cc30ce0a6b1312f2c8690d0f62ab09b7d7d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ytake/Laravel-Aspect/zipball/ee7f6cc30ce0a6b1312f2c8690d0f62ab09b7d7d",
+                "reference": "ee7f6cc30ce0a6b1312f2c8690d0f62ab09b7d7d",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/annotations": "^1.11",
+                "illuminate/bus": "^8.0",
+                "illuminate/cache": "^8.0",
+                "illuminate/config": "^8.0",
+                "illuminate/console": "^8.0",
+                "illuminate/contracts": "^8.0",
+                "illuminate/database": "^8.0",
+                "illuminate/events": "^8.0",
+                "illuminate/filesystem": "^8.0",
+                "illuminate/log": "^8.0",
+                "illuminate/queue": "^8.0",
+                "illuminate/support": "^8.0",
+                "nikic/php-parser": "^4.0",
+                "php": "^7.3|^8.0",
+                "psr/log": "~1.0",
+                "ray/aop": "^2.9"
+            },
+            "require-dev": {
+                "illuminate/encryption": "^8.0",
+                "mockery/mockery": "*",
+                "pdepend/pdepend": "^2.2.4",
+                "phploc/phploc": "*",
+                "phpmd/phpmd": "@stable",
+                "phpunit/phpunit": "^9.3.3",
+                "satooshi/php-coveralls": "*",
+                "sebastian/phpcpd": "*",
+                "squizlabs/php_codesniffer": "~2.7",
+                "symfony/console": "^5.2",
+                "symfony/framework-bundle": "^5.2",
+                "vlucas/phpdotenv": "^5.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Ytake\\LaravelAspect\\AspectServiceProvider",
+                        "Ytake\\LaravelAspect\\ConsoleServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ytake\\LaravelAspect\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yuuki Takezawa",
+                    "email": "yuuki.takezawa@comnect.jp.net"
+                }
+            ],
+            "description": "Aspect Oriented Programming library for laravel framework, and lumen",
+            "keywords": [
+                "aspect",
+                "cache",
+                "laravel",
+                "logger",
+                "transaction"
+            ],
+            "support": {
+                "issues": "https://github.com/ytake/Laravel-Aspect/issues",
+                "source": "https://github.com/ytake/Laravel-Aspect/tree/7.0.0"
+            },
+            "time": "2020-12-18T10:16:14+00:00"
         }
     ],
     "packages-dev": [
@@ -7609,6 +7824,7 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^8.0",
+        "ext-json": "*",
         "ext-rdkafka": "^4.0"
     },
     "platform-dev": [],

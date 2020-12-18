@@ -33,6 +33,7 @@ RUN apk upgrade --update \
     && mkdir -p /usr/share/nginx/html \
     && echo "Not Found" > /usr/share/nginx/html/index.html \
     && rm -f /etc/nginx/conf.d/default.conf \
+    && sed -i -e "s|listen.allowed_clients = 127.0.0.1|;listen.allowed_clients = 127.0.0.1|" /usr/local/etc/php-fpm.d/www.conf \
     && apk del \
         curl \
         git \

@@ -13,6 +13,11 @@ final class RouteServiceProvider extends ServiceProvider
     {
         /** @var Router $router */
         $router = $this->app['router'];
-        $router->get('/', Actions\HomeAction::class)->name('home');
+        $router->group(['middleware' => ['web']], function (Router $router) {
+            $router->get('/', Actions\HomeAction::class)->name('home');
+            $router->get('/keyword/form', Actions\Keyword\FormAction::class)->name('keyword.form');
+            $router->post('/keyword/register', Actions\Keyword\RegisterAction::class)->name('keyword.register');
+            $router->get('/keyword/complete', Actions\Keyword\CompleteAction::class)->name('keyword.complete');
+        });
     }
 }

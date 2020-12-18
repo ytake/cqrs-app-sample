@@ -9,8 +9,13 @@ use RdKafka\Producer;
 use RdKafka\ProducerTopic;
 use const RD_KAFKA_PARTITION_UA;
 
-final class EntryProducer
+final class KeywordProducer implements KeywordProducerInterface
 {
+    /**
+     * @param Producer $producer
+     * @param ProducerTopic $topic
+     * @param SerializerInterface $serializer
+     */
     public function __construct(
         private Producer $producer,
         private ProducerTopic $topic,
@@ -18,6 +23,10 @@ final class EntryProducer
     ) {
     }
 
+    /**
+     * to Kafka
+     * @param ParameterInterface $parameter
+     */
     public function add(
         ParameterInterface $parameter
     ): void {

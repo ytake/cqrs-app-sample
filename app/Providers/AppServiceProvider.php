@@ -1,28 +1,35 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\DataAccess\Database\Keyword;
+use App\DataAccess\KeywordProducer;
+use App\Listeners\KeywordRegisteredListener;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
+use SampleDomain\Keyword\Repository\KeywordRepository;
 
-class AppServiceProvider extends ServiceProvider
+final class AppServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
+    public function register(): void
     {
-        //
+        $this->app->bind(
+            KeywordRepository::class,
+            fn(Application $app) => new KeywordRepository(new Keyword($app->make('db')))
+        );
+        $this->app->bind(
+            KeywordRegisteredListener::class,
+            fn(Application $app) => new KeywordRegisteredListener($app->make(KeywordProducer::class))
+        );
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function provides(): array
     {
-        //
+        return [
+            KeywordRepository::class,
+            KeywordRegisteredListener::class,
+        ];
     }
 }

@@ -53,6 +53,11 @@ Elasticsearchにinsertする以外にRDBMSに正規化して持たせたい場�
 
 これはフレームワークの範囲を超えているので、専用のミドルウェアを使った方が良いでしょう。
 
+## Run
 
-
+```bash
+$ docker-compose up -d
+$ docker-compose exec php composer install --prefer-dist --no-interaction && composer app-setup
+$ docker-compose exec php /var/www/html/artisan migrate
+```
 

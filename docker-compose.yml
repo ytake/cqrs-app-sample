@@ -11,8 +11,12 @@ services:
       - es01
       - mysql
       - kafka
+      - zookeeper
     ports:
       - 80:80
+    tty: true
+    networks:
+      - sample
   es01:
     image: elasticsearch:7.10.1
     container_name: es01
@@ -30,6 +34,9 @@ services:
         hard: -1
     ports:
       - 9200:9200
+    tty: true
+    networks:
+      - sample
   kibana:
     image: kibana:7.10.1
     container_name: kibana
@@ -39,6 +46,8 @@ services:
       - es01:elasticsearch
     ports:
       - 5601:5601
+    networks:
+      - sample
   mysql:
     image: mysql:8.0
     ports:
@@ -50,12 +59,18 @@ services:
       MYSQL_PASSWORD: secret
     volumes:
       - ./docker/mysql/my.cnf:/etc/mysql/mysql.conf.d/z.cnf
+    tty: true
+    networks:
+      - sample
   zookeeper:
     image: 'bitnami/zookeeper:latest'
     ports:
       - '2181:2181'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+    tty: true
+    networks:
+      - sample
   kafka:
     image: 'bitnami/kafka:latest'
     ports:
@@ -68,3 +83,9 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
     depends_on:
       - zookeeper
+    tty: true
+    networks:
+      - sample
+networks:
+  sample:
+    driver: bridge

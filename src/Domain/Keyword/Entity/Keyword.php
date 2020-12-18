@@ -1,12 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace SampleDomain\Word\Entity;
+namespace SampleDomain\Keyword\Entity;
 
 use SampleDomain\User\ValueObject\UserId;
 
-final class Word
+final class Keyword
 {
+    /**
+     * @param UserId $user
+     * @param string $word
+     */
     public function __construct(
         private UserId $user,
         private string $word

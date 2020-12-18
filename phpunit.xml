@@ -16,6 +16,9 @@
         <include>
             <directory suffix=".php">./app</directory>
         </include>
+        <exclude>
+            <directory>./app/DataAccess</directory>
+        </exclude>
     </coverage>
     <php>
         <server name="APP_ENV" value="testing"/>
@@ -27,5 +30,6 @@
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>
         <server name="TELESCOPE_ENABLED" value="false"/>
+        <env name="ASPECT_DRIVER" value="none"/>
     </php>
 </phpunit>
