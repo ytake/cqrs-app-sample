@@ -9,8 +9,6 @@ use App\DataAccess\KeywordProducer;
 use App\DataAccess\KeywordProducerFactory;
 use App\Foundation\Kafka\PublisherConfigFactory;
 use App\Foundation\Kafka\Subscriber;
-use App\Foundation\Kafka\SubscriberConfig;
-use App\Foundation\Kafka\SubscriberConfigFactory;
 use App\Foundation\Kafka\SubscriberFactory;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\DeferrableProvider;
@@ -24,7 +22,6 @@ final class KafkaServiceProvider extends ServiceProvider implements DeferrablePr
     private array $factories = [
         PublisherConfig::class => PublisherConfigFactory::class,
         KeywordProducer::class => KeywordProducerFactory::class,
-        SubscriberConfig::class => SubscriberConfigFactory::class,
         Subscriber::class => SubscriberFactory::class,
     ];
 

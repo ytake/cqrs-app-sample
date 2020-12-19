@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\DataAccess\Elasticsearch\SortedKeyword;
+use App\DataAccess\Elasticsearch\SuggestKeyword;
 use App\Foundation\Elasticsearch\Client;
 use App\Foundation\Elasticsearch\ClientFactory;
 use Illuminate\Contracts\Foundation\Application;
@@ -15,7 +17,21 @@ final class ElasticsearchServiceProvider extends ServiceProvider implements Defe
     {
         $this->app->singleton(
             Client::class,
-            fn(Application $application) => (new ClientFactory())->__invoke($application)
+            fn(Application $app) => (new ClientFactory())->__invoke($app)
+        );
+        $this->app->singleton(
+            SortedKeyword::class,
+            fn(Application $app) => new SortedKeyword(
+                $app->make(\Elasticsearch\Client::class),
+                $app['config']['elasticsearch']['keyword_index']
+            )
+        );
+        $this->app->singleton(
+            SuggestKeyword::class,
+            fn(Application $app) => new SuggestKeyword(
+                $app->make(\Elasticsearch\Client::class),
+                $app['config']['elasticsearch']['keyword_index']
+            )
         );
     }
 
@@ -23,6 +39,8 @@ final class ElasticsearchServiceProvider extends ServiceProvider implements Defe
     {
         return [
             Client::class,
+            SortedKeyword::class,
+            SuggestKeyword::class,
         ];
     }
 }

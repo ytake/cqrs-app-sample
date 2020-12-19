@@ -7,6 +7,10 @@ use RdKafka\Conf;
 
 final class SubscriberConfig
 {
+    /**
+     * @param string $groupId
+     * @param Conf $conf
+     */
     public function __construct(
         private string $groupId,
         private Conf $conf

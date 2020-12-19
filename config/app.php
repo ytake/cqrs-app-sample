@@ -175,6 +175,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\KafkaServiceProvider::class,
         App\Providers\ElasticsearchServiceProvider::class,
+        App\Providers\ActionServiceProvider::class,
     ],
 
     /*

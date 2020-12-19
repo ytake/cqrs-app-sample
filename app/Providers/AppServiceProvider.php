@@ -3,35 +3,68 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Console\Commands\KafkaSubscribeCommand;
-use App\DataAccess\Database\Keyword;
+use App\Console\Commands;
+use App\DataAccess;
 use App\DataAccess\KeywordProducer;
-use App\DataAccess\Repository\KeywordRepositoryByMySql;
 use App\Foundation\Elasticsearch\Client;
+use App\Foundation\Kafka\Subscriber;
+use App\Foundation\Kafka\SubscriberConfig;
 use App\Listeners\KeywordRegisteredListener;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
-use SampleDomain\Keyword\Repository\KeywordRepositoryInterface;
+use RdKafka\Conf;
+use RdKafka\Consumer;
+use function sprintf;
 
 final class AppServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     public function boot(): void
     {
-        $this->app->singleton(KafkaSubscribeCommand::class, fn(Application $app) =>
-            new KafkaSubscribeCommand()
-        );
+        /** @var \Illuminate\Foundation\Application $app */
+        $app = $this->app;
         $this->commands([
-            KafkaSubscribeCommand::class
+            Commands\KafkaSubscribeElasticsearchCommand::class,
+            Commands\KafkaSubscribeMySqlCommand::class,
         ]);
+        //
+        $app->bindMethod(
+            sprintf('%s@%s', Commands\KafkaSubscribeMySqlCommand::class, 'handle'),
+            function (Commands\KafkaSubscribeMySqlCommand $command, Application $app) {
+                $kafka = $app['config']['kafka'];
+                $config = new SubscriberConfig(
+                    $kafka['topics']['entry']['group_id_db'],
+                    new Conf()
+                );
+                $command->handle(
+                    $app->make(Subscriber::class),
+                    new DataAccess\Database\RegisterKeyword($app->make('db')),
+                    new Consumer($config->getKafkaConf())
+                );
+            }
+        );
+        $app->bindMethod(
+            sprintf('%s@%s', Commands\KafkaSubscribeElasticsearchCommand::class, 'handle'),
+            function (Commands\KafkaSubscribeElasticsearchCommand $command, Application $app) {
+                $kafka = $app['config']['kafka'];
+                $config = new SubscriberConfig(
+                    $kafka['topics']['entry']['group_id_es'],
+                    new Conf()
+                );
+                $command->handle(
+                    $app->make(Subscriber::class),
+                    new DataAccess\Elasticsearch\RegisterKeyword(
+                        $app->make(\Elasticsearch\Client::class),
+                        $app['config']['elasticsearch']['keyword_index']
+                    ),
+                    new Consumer($config->getKafkaConf())
+                );
+            }
+        );
     }
 
     public function register(): void
     {
-        $this->app->bind(
-            KeywordRepositoryInterface::class,
-            fn(Application $app) => new KeywordRepositoryByMySql(new Keyword($app->make('db')))
-        );
         $this->app->bind(
             KeywordRegisteredListener::class,
             fn(Application $app) => new KeywordRegisteredListener($app->make(KeywordProducer::class))
@@ -45,8 +78,6 @@ final class AppServiceProvider extends ServiceProvider implements DeferrableProv
     {
         return [
             \Elasticsearch\Client::class,
-            KafkaSubscribeCommand::class,
-            KeywordRepositoryInterface::class,
             KeywordRegisteredListener::class,
         ];
     }

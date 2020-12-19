@@ -18,18 +18,19 @@ final class SubscriberFactory implements FactoryInterface
      */
     public function __invoke(
         Application $application
-    ): Subscriber
-    {
+    ): Subscriber {
         $kafka = $application['config']['kafka'];
         return new Subscriber(
             $kafka['brokers'],
             $kafka['topics']['entry']['created'],
-            new Consumer(conf: $application->make(SubscriberConfig::class)->getKafkaConf()),
             $this->getTopicConf()
         );
     }
 
-    private function getTopicConf(): TopicConf
+    /**
+     * @return TopicConf
+     */
+    public function getTopicConf(): TopicConf
     {
         $conf = new TopicConf();
         $conf->set('auto.commit.interval.ms', '100');

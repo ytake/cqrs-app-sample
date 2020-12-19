@@ -55,8 +55,32 @@ Elasticsearchにinsertする以外にRDBMSに正規化して持たせたい場�
 
 ## Run
 
+### 1. Setup
+
+アプリケーションを動かす前に実行してください
+
 ```bash
 $ docker-compose up -d
+# 各ミドルウェアはコンテナですが起動に時間がかかります。
+# しばらくお待ちください。
+# これらのミドルウェアを使う場合、商用ではコンテナではなく物理的HDDで動かしましょう。
 $ docker-compose exec php composer install --prefer-dist --no-interaction && composer app-setup
 $ docker-compose exec php /var/www/html/artisan migrate
 ```
+
+### 2. Elasticsearch
+
+tokenizerなどを設定します。
+
+```bash
+$ curl -X PUT 'http://localhost:9200/words' -H 'Content-Type: application/json' -d @dataset/mapping.json
+$ curl -X POST 'http://localhost:9200/_bulk?pretty' -H 'Content-Type: application/json' --data-binary @dataset/words.json
+```
+
+### 3. Topic Subscribe
+
+```bash
+$ docker-compose exec php /var/www/html/artisan sample:subscribe_es
+$ docker-compose exec php /var/www/html/artisan sample:subscribe_mysql
+```
+

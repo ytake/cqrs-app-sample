@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace App\Http\Responder\Keyword;
 
+use Generator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Response;
 
-final class CompleteResponder
+final class SuggestResponder
 {
     /**
      * @param Factory $view
@@ -17,13 +18,16 @@ final class CompleteResponder
     }
 
     /**
+     * @param Generator $generator
      * @return Response
      */
-    public function redirectToForm(): Response
-    {
+    public function render(
+        Generator $generator
+    ): Response {
         return new Response(
-            $this->view->make('keyword.complete'),
-            Response::HTTP_OK
+            $this->view->make('keyword.suggest', [
+                'list' => $generator
+            ])
         );
     }
 }

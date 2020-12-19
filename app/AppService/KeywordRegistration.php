@@ -3,13 +3,12 @@ declare(strict_types=1);
 
 namespace App\AppService;
 
+use Psr\Log\LoggerInterface;
 use SampleDomain\Keyword\Event\KeywordRegistered;
 use Illuminate\Contracts\Events\Dispatcher;
 use SampleDomain\Keyword\Entity\Keyword;
-use SampleDomain\Keyword\Repository\KeywordRepositoryInterface;
 use SampleDomain\User\ValueObject\UserId;
 use Ytake\LaravelAspect\Annotation\LogExceptions;
-use Ytake\LaravelAspect\Annotation\Transactional;
 
 /**
  * Usecase
@@ -17,18 +16,17 @@ use Ytake\LaravelAspect\Annotation\Transactional;
 class KeywordRegistration
 {
     /**
-     * @param KeywordRepositoryInterface $repository
+     * @param LoggerInterface $logger
      * @param Dispatcher $dispatcher
      */
     public function __construct(
-        private KeywordRepositoryInterface $repository,
+        private LoggerInterface $logger,
         private Dispatcher $dispatcher
     ) {
     }
 
     /**
      * キーワードを登録する
-     * @Transactional("mysql")
      * @LogExceptions()
      * @param int $id
      * @param string $text
@@ -38,7 +36,8 @@ class KeywordRegistration
         string $text
     ): void {
         $keyword = new Keyword(new UserId($id), $text);
-        $this->repository->save($keyword);
+        // Eventを発行
         $this->dispatcher->dispatch(new KeywordRegistered($keyword));
+        $this->logger->info('publish', ['object' => $keyword]);
     }
 }

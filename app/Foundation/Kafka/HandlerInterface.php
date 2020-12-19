@@ -5,8 +5,12 @@ namespace App\Foundation\Kafka;
 
 use RdKafka\Message;
 
-interface ConsumerInterface
+interface HandlerInterface
 {
+    /**
+     * daemonでコールバックされる
+     * @param Message $message
+     */
     public function __invoke(
         Message $message
     ): void;

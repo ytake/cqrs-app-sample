@@ -6,8 +6,6 @@ namespace App\Http\Actions\Keyword;
 use App\AppService\KeywordRegistration;
 use App\Http\Requests\KeywordRequest;
 use App\Http\Responder\Keyword\RegisterResponder;
-use SampleDomain\Keyword\Entity\Keyword;
-use SampleDomain\User\ValueObject\UserId;
 use Symfony\Component\HttpFoundation\Response;
 
 final class RegisterAction
@@ -23,7 +21,7 @@ final class RegisterAction
 
     /**
      * @param KeywordRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return Response
      */
     public function __invoke(
         KeywordRequest $request

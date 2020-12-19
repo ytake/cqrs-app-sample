@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Actions\Keyword;
 
 use App\Http\Responder\Keyword\CompleteResponder;
-use Illuminate\Http\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final class CompleteAction
 {
@@ -17,9 +17,9 @@ final class CompleteAction
     }
 
     /**
-     * @return RedirectResponse
+     * @return Response
      */
-    public function __invoke(): RedirectResponse
+    public function __invoke(): Response
     {
         return $this->responder->redirectToForm();
     }
