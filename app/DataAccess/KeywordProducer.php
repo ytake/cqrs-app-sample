@@ -40,7 +40,7 @@ final class KeywordProducer implements KeywordProducerInterface
         );
         $this->producer->poll(0);
         $error = $this->producer->commitTransaction(10000);
-        if ($error) {
+        if (!is_null($error)) {
             throw new \RuntimeException('Kafka Transaction Error.');
         }
     }
