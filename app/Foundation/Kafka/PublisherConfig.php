@@ -25,6 +25,7 @@ final class PublisherConfig
     {
         $this->conf->set('client.id', $this->clientId);
         $this->conf->set('queue.buffering.max.ms', '1');
+        $this->conf->set('transactional.id', 'php-kafka-sample');
         $this->conf->set('queue.buffering.max.messages', '1000');
         $this->callbackDeliveryReport($this->conf);
         return $this->conf;
