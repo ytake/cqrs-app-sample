@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Actions\Keyword;
 
 use App\Http\Responder\Keyword\SuggestResponder;
-use App\QueryService\SuggestKeywordQueryProcessor;
+use App\QueryProcessor\SuggestKeywordQueryProcessor;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 

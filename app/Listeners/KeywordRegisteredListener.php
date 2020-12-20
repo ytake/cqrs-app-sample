@@ -7,7 +7,7 @@ use App\DataAccess\Kafka\KeywordCreatedParameter;
 use App\DataAccess\KeywordProducerInterface;
 use SampleDomain\Keyword\Event\KeywordRegistered;
 
-final class KeywordRegisteredListener
+class KeywordRegisteredListener
 {
     /**
      * @param KeywordProducerInterface $producer

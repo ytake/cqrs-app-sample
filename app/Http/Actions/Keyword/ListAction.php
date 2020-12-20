@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Actions\Keyword;
 
 use App\Http\Responder\Keyword\ListResponder;
-use App\QueryService\KeywordQueryProcessor;
+use App\QueryProcessor\KeywordQueryProcessor;
 use Symfony\Component\HttpFoundation\Response;
 
 final class ListAction

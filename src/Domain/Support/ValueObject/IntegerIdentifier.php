@@ -9,13 +9,16 @@ class IntegerIdentifier
 {
     private int $id;
 
+    /**
+     * @param int $id
+     */
     public function __construct(
         int $id
     ) {
-        $this->id = match($id) {
-            0 => throw new InvalidNativeArgumentException(),
-            default => $id
-        };
+        if ($id < 0) {
+            throw new InvalidNativeArgumentException();
+        }
+        $this->id =$id;
     }
 
     /**

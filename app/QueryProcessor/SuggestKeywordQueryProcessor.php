@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\QueryService;
+namespace App\QueryProcessor;
 
 use App\Transfer\Keyword;
 use Generator;
